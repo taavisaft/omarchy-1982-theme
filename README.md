@@ -101,10 +101,25 @@ in `~/.config/hypr/looknfeel.lua`:
 
 ```lua
 hl.config({
-  general    = { border_size = 1, gaps_in = 4, gaps_out = 10 },
-  decoration = { rounding = 0, shadow = { enabled = false } },
+  general = { border_size = 2, gaps_in = 4, gaps_out = 10 },
+  decoration = {
+    rounding = 0,
+    -- Phosphor glow. A CRT bled light into the glass around whatever it drew,
+    -- so the focused window carries a green halo and the rest a fainter one.
+    shadow = {
+      enabled = true,
+      range = 18,
+      render_power = 3,
+      color = "rgba(33ff3338)",
+      color_inactive = "rgba(1a8f1a14)",
+    },
+  },
 })
 ```
+
+The glow cannot ship inside the theme for the same reason `hyprland.lua`
+cannot: Hyprland shadows are configured in Lua, and Lua is dropped from a
+repo-installed theme.
 
 ## License
 
