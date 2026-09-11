@@ -1,5 +1,5 @@
-background       = "#000000"
+background       = "background"
 background-alpha = 1.0
-text             = "#33FF33"
+text             = "foreground"
 border           = "hyprland.active-border-foreground"
 border-alpha     = 1.0
