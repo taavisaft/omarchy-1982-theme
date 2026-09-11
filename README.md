@@ -19,7 +19,8 @@ A 1982 machine had an answer for that, so this theme uses it.
 |---|---|---|
 | Bar, menus, notifications, lock | MDA | green on black |
 | Terminal, TUI apps | MDA | green on black |
-| Text editor | CGA | 16 colors |
+| Editor chrome (tabs, panels, gutter) | MDA | green on black |
+| Editor buffer — the code itself | CGA | 16 colors |
 
 ## Palette
 
@@ -55,7 +56,16 @@ cp extras/neovim/lua/plugins/1982.lua ~/.config/nvim/lua/plugins/
 Without this, Neovim follows the desktop and goes green — which is a legitimate
 way to run the theme if you want the machine to be monochrome all the way down.
 
-**Zed** is not covered yet; it currently follows the desktop into green.
+**Zed**:
+
+```bash
+cp extras/zed/settings.json ~/.config/zed/settings.json   # merge, if you have your own
+```
+
+Zed is split the same way the desktop is: the chrome — tabs, panels, status
+bar, borders, icons — is MDA green, while everything inside a buffer is CGA and
+uses the same role-to-color mapping as the Neovim colorscheme, so the two
+editors read alike.
 
 **Midnight Commander** is not themed by Omarchy at all, so it needs its skin
 installed and selected by hand:
