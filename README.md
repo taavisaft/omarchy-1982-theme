@@ -20,6 +20,7 @@ A 1982 machine had an answer for that, so this theme uses it.
 | Bar, menus, notifications, lock | MDA | green on black |
 | Terminal, TUI apps | MDA | green on black |
 | Editor chrome (tabs, panels, gutter) | MDA | green on black |
+| Editor's built-in terminal | MDA | green on black |
 | Editor buffer — the code itself | CGA | 16 colors |
 
 ## Palette
@@ -66,6 +67,10 @@ Zed is split the same way the desktop is: the chrome — tabs, panels, status
 bar, borders, icons — is MDA green, while everything inside a buffer is CGA and
 uses the same role-to-color mapping as the Neovim colorscheme, so the two
 editors read alike.
+
+Zed's built-in terminal is a terminal rather than a code buffer, so it is MDA
+green too, carrying the exact ANSI palette Omarchy generates into the theme's
+`foot.ini` — a shell looks the same whichever window it is in.
 
 **Midnight Commander** is not themed by Omarchy at all, so it needs its skin
 installed and selected by hand:

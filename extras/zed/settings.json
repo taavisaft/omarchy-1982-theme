@@ -73,6 +73,37 @@
       "icon.muted": "#1C7A1C",
       "icon.disabled": "#146014",
       "icon.accent": "#33FF33",
+      // Zed's built-in terminal is a terminal, not a code buffer, so it is
+      // MDA green like foot and alacritty rather than CGA. Values are exactly
+      // what Omarchy generates into the theme's foot.ini from colors.toml.
+      "terminal.background": "#000000",
+      "terminal.foreground": "#33FF33",
+      "terminal.bright_foreground": "#C8FFC8",
+      "terminal.dim_foreground": "#1C7A1C",
+      "terminal.ansi.black": "#000000",
+      "terminal.ansi.red": "#A8FFA8",
+      "terminal.ansi.green": "#33FF33",
+      "terminal.ansi.yellow": "#7DFF7D",
+      "terminal.ansi.blue": "#157015",
+      "terminal.ansi.magenta": "#1C8C1C",
+      "terminal.ansi.cyan": "#5CFF5C",
+      "terminal.ansi.white": "#33FF33",
+      "terminal.ansi.bright_black": "#1C7A1C",
+      "terminal.ansi.bright_red": "#D6FFD6",
+      "terminal.ansi.bright_green": "#66FF66",
+      "terminal.ansi.bright_yellow": "#B3FFB3",
+      "terminal.ansi.bright_blue": "#33B833",
+      "terminal.ansi.bright_magenta": "#3FCC3F",
+      "terminal.ansi.bright_cyan": "#8FFF8F",
+      "terminal.ansi.bright_white": "#C8FFC8",
+      "terminal.ansi.dim_black": "#000000",
+      "terminal.ansi.dim_red": "#146014",
+      "terminal.ansi.dim_green": "#1C7A1C",
+      "terminal.ansi.dim_yellow": "#1A8F1A",
+      "terminal.ansi.dim_blue": "#0D3B0D",
+      "terminal.ansi.dim_magenta": "#146014",
+      "terminal.ansi.dim_cyan": "#1A8F1A",
+      "terminal.ansi.dim_white": "#1C7A1C",
       // The CGA exception. Same role-to-color mapping as
       // extras/neovim/colors/cga1982.lua, so both editors read alike.
       "syntax": {
