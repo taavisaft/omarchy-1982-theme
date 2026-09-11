@@ -1,11 +1,16 @@
-background       = "background"
+# Colours are literal hex, not role tokens. Only some consumers resolve a role
+# name: Color.composed() and flatColor() do, but Color.pick() -- which backs
+# every *.text, *.selected-text, *.text-error and notifications.countdown --
+# returns the raw string, so a role there renders as an invalid colour, i.e.
+# black on black. Hex is correct on every path.
+background       = "#000000"
 background-alpha = 1.0
-text             = "foreground"
-placeholder      = "muted"
-text-error       = "urgent"
+text             = "#33FF33"
+placeholder      = "#1C7A1C"
+text-error       = "#A8FFA8"
 border           = "hyprland.active-border"
 border-active    = "hyprland.active-border"
-border-error     = "urgent"
+border-error     = "#A8FFA8"
 border-alpha     = 1.0
-selection        = "foreground"
+selection        = "#33FF33"
 selection-alpha  = 0.45
