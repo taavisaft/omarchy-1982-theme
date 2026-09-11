@@ -1,0 +1,37 @@
+# Partial override. Omarchy generates the rest of shell.toml from
+# shell.toml.tpl using colors.toml, and the keys below win over it.
+#
+# A CRT has no compositor and therefore no translucency. Every surface here is
+# opaque on purpose; the scrim is the one exception, because dimming the
+# desktop behind a menu is the closest a tube came to a modal.
+
+[bar]
+background-alpha = 1.0
+
+[controls]
+normal-border-alpha       = 0.45
+hover-cursor-border-alpha = 0.70
+focus-border-alpha        = 0.70
+selected-color            = "accent"
+selected-border-width     = 1
+selected-border-alpha     = 0.90
+
+[popups]
+background-alpha = 1.0
+
+[tooltip]
+background-alpha = 1.0
+
+[notifications]
+background-alpha = 1.0
+
+[launcher]
+background-alpha = 1.0
+scrim-alpha      = 0.75
+
+[menu]
+background-alpha = 1.0
+scrim-alpha      = 0.75
+
+[lock]
+background-alpha = 1.0

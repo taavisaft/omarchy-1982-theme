@@ -1,0 +1,47 @@
+# 1982 — IBM 5151 / MDA green phosphor.
+#
+# A monochrome display has no hue to spend, so every ANSI slot is one green at a
+# different luminance. Things stay distinguishable the way they did on a real
+# P39 phosphor tube: by brightness, not by color.
+#
+# `red` is the BRIGHTEST green on purpose. Omarchy spends it on alerts — bar
+# `active`, polkit `text-error`, lock `border-error` — and on a monochrome tube
+# an alert reads as phosphor bloom, not as a different hue.
+
+mode = "dark"
+
+accent    = "#33FF33"
+selection = "#0D3B0D"
+muted     = "#1C7A1C"
+
+background        = "#000000"
+dark_background   = "#000000"
+darker_background = "#000000"
+lighter_background = "#0A1A0A"
+
+foreground        = "#33FF33"
+dark_foreground   = "#1A8F1A"
+light_foreground  = "#66FF66"
+bright_foreground = "#C8FFC8"
+
+# Shipped in colors.toml rather than hyprland.lua: a theme installed from a git
+# repo has all its .lua dropped, and these two keys survive that.
+hyprland_active_border   = "rgba(33ff33ee) rgba(c8ffc8ff) rgba(0d3b0dcc) 45deg"
+hyprland_inactive_border = "rgba(1a8f1a66)"
+
+# Luminance ladder, dimmest to brightest.
+brown   = "#146014"
+blue    = "#157015"
+magenta = "#1C8C1C"
+green   = "#33FF33"
+cyan    = "#5CFF5C"
+yellow  = "#7DFF7D"
+orange  = "#93FF93"
+red     = "#A8FFA8"
+
+bright_blue    = "#33B833"
+bright_magenta = "#3FCC3F"
+bright_green   = "#66FF66"
+bright_cyan    = "#8FFF8F"
+bright_yellow  = "#B3FFB3"
+bright_red     = "#D6FFD6"
