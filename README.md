@@ -57,6 +57,19 @@ way to run the theme if you want the machine to be monochrome all the way down.
 
 **Zed** is not covered yet; it currently follows the desktop into green.
 
+**Midnight Commander** is not themed by Omarchy at all, so it needs its skin
+installed and selected by hand:
+
+```bash
+install -Dm644 mc/1982.ini ~/.local/share/mc/skins/1982.ini
+sed -i 's/^skin=.*/skin=1982/' ~/.config/mc/ini   # or set it in Options > Appearance
+```
+
+The skin covers panels, dialogs, the viewer, the diff viewer and mcedit's
+chrome. Note that mcedit's *syntax* highlighting is not CGA — mc maps syntax
+categories onto the terminal's ANSI palette, which this theme paints green, so
+mcedit stays monochrome. Neovim is where the CGA exception lives.
+
 ## Backgrounds
 
 - `1-phosphor.png` — scanlines and a phosphor pool, for working on
