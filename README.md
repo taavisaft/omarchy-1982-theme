@@ -21,7 +21,7 @@ A 1982 machine had an answer for that, so this theme uses it.
 | Terminal, TUI apps | MDA | green on black |
 | Editor chrome (tabs, panels, gutter) | MDA | green on black |
 | Editor's built-in terminal | MDA | green on black |
-| Editor buffer — the code itself | CGA | 16 colors |
+| Editor buffer — the code itself | CGA | 16 colors, light-green body text |
 
 ## Palette
 

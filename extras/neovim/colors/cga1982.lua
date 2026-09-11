@@ -33,10 +33,15 @@ local cga = {
 -- the canvas without a border.
 local surface = "#0A0A0A"
 
+-- Neutral buffer text: the one role that steps outside the CGA 16. Light grey
+-- read as white against a machine that is green everywhere else. Kept clear of
+-- light_green (strings) and light_cyan (functions) so roles stay separable.
+local text = "#8FE88F"
+
 local hl = {
   -- Canvas
-  Normal       = { fg = cga.light_gray, bg = cga.black },
-  NormalFloat  = { fg = cga.light_gray, bg = surface },
+  Normal       = { fg = text, bg = cga.black },
+  NormalFloat  = { fg = text, bg = surface },
   FloatBorder  = { fg = cga.dark_gray,  bg = surface },
   CursorLine   = { bg = surface },
   ColorColumn  = { bg = surface },
@@ -52,9 +57,9 @@ local hl = {
   SignColumn   = { bg = cga.black },
   VertSplit    = { fg = cga.dark_gray },
   WinSeparator = { fg = cga.dark_gray },
-  StatusLine   = { fg = cga.black, bg = cga.light_gray },
-  StatusLineNC = { fg = cga.light_gray, bg = surface },
-  Pmenu        = { fg = cga.light_gray, bg = surface },
+  StatusLine   = { fg = cga.black, bg = text },
+  StatusLineNC = { fg = text, bg = surface },
+  Pmenu        = { fg = text, bg = surface },
   PmenuSel     = { fg = cga.white, bg = cga.blue, bold = true },
   Folded       = { fg = cga.dark_gray, bg = surface },
   NonText      = { fg = cga.dark_gray },
@@ -68,12 +73,12 @@ local hl = {
   Number       = { fg = cga.light_red },
   Boolean      = { fg = cga.light_red },
   Float        = { fg = cga.light_red },
-  Identifier   = { fg = cga.light_gray },
+  Identifier   = { fg = text },
   Function     = { fg = cga.light_cyan },
   Statement    = { fg = cga.light_magenta },
   Conditional  = { fg = cga.light_magenta },
   Repeat       = { fg = cga.light_magenta },
-  Operator     = { fg = cga.light_gray },
+  Operator     = { fg = text },
   Keyword      = { fg = cga.light_magenta },
   Exception    = { fg = cga.light_magenta },
   PreProc      = { fg = cga.brown },
@@ -85,7 +90,7 @@ local hl = {
   Structure    = { fg = cga.yellow },
   Typedef      = { fg = cga.yellow },
   Special      = { fg = cga.light_cyan },
-  Delimiter    = { fg = cga.light_gray },
+  Delimiter    = { fg = text },
   Todo         = { fg = cga.black, bg = cga.yellow, bold = true },
   Error        = { fg = cga.light_red, bold = true },
 
