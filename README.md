@@ -103,7 +103,10 @@ in `~/.config/hypr/looknfeel.lua`:
 hl.config({
   general = { border_size = 2, gaps_in = 4, gaps_out = 10 },
   decoration = {
-    rounding = 0,
+    -- A tube was blown glass, not a rectangle: the picture met the bezel on a
+    -- curve. Slight, so a window still reads as a character cell.
+    rounding = 6,
+    rounding_power = 3,
     -- Phosphor glow. A CRT bled light into the glass around whatever it drew,
     -- so the focused window carries a green halo and the rest a fainter one.
     shadow = {
