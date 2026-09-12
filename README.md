@@ -107,6 +107,41 @@ chrome. Note that mcedit's *syntax* highlighting is not CGA — mc maps syntax
 categories onto the terminal's ANSI palette, which this theme paints green, so
 mcedit stays monochrome. Neovim is where the CGA exception lives.
 
+### Font
+
+The theme is drawn for **BigBlueTerm437 Nerd Font Mono** — IBM's code page 437
+ROM font, the one the 5151 actually displayed, patched with Nerd Font glyphs so
+the bar's icons survive.
+
+```bash
+sudo pacman -S ttf-bigblueterminal-nerd
+omarchy font set "BigBlueTerm437 Nerd Font Mono"
+```
+
+The family cannot ship inside the theme. Omarchy resolves the shell's font
+through the fontconfig `monospace` alias `omarchy font set` writes and keeps
+that system-wide deliberately, so a theme can pin sizes but never a family.
+`shell.font.toml` ships the size — 16px, which is BigBlueTerm437's native 8x16
+cell, so it renders pixel-perfect rather than resampled.
+
+For everything to actually match, the size has to be set in pixels rather than
+points. A terminal usually asks for points: `size=11` in `foot.ini` is about
+14.7px, which will not line up with a 16px bar however carefully you pick the
+number. Ask for pixels instead:
+
+```ini
+font=BigBlueTerm437 Nerd Font Mono:pixelsize=16
+```
+
+GTK applications take neither from the theme nor from `omarchy font set`:
+
+```bash
+gsettings set org.gnome.desktop.interface monospace-font-name "BigBlueTerm437 Nerd Font Mono 16px"
+```
+
+Setting `font-name` as well puts button and dialog labels on the same font —
+consistent, though further than most people want to go.
+
 ## Backgrounds
 
 - `1-phosphor.png` — scanlines and a phosphor pool, for working on
@@ -121,6 +156,10 @@ the file from `colors.toml`, so shipping one would mean the published theme
 never matched the one its author runs. The border gradient is defined in
 `colors.toml` as `hyprland_active_border` / `hyprland_inactive_border`, which
 survives installation.
+
+A font family, either. `omarchy font set` writes a fontconfig alias that is
+deliberately system-wide, which is why the font above is an install step rather
+than a file in this repo; only its size ships, in `shell.font.toml`.
 
 Window geometry — gaps, rounding, border width — is not a theme's business
 either. If you want the sharp-cornered look the screenshots show, that belongs

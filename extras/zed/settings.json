@@ -10,8 +10,17 @@
   "project_panel": {
     "dock": "left"
   },
+  // One font, one size, everywhere -- matches foot, the Omarchy bar and GTK.
+  // BigBlueTerm437 is the IBM PC code-page-437 ROM font; its native cell is
+  // 8x16, so 16px renders it pixel-perfect rather than resampled.
+  "ui_font_family": "BigBlueTerm437 Nerd Font Mono",
   "ui_font_size": 16,
-  "buffer_font_size": 15,
+  "buffer_font_family": "BigBlueTerm437 Nerd Font Mono",
+  "buffer_font_size": 16,
+  "terminal": {
+    "font_family": "BigBlueTerm437 Nerd Font Mono",
+    "font_size": 16
+  },
   "theme": {
     "mode": "dark",
     "light": "One Light",

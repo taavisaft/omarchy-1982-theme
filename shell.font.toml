@@ -1,0 +1,12 @@
+# 16px everywhere, so the bar, menus and notifications match the terminal and
+# the editor rather than each of them picking its own size.
+#
+# 16 is not arbitrary. The font this theme is drawn for is BigBlueTerm437, the
+# IBM code page 437 ROM font, whose cell is 8x16 -- at 16px it lands on its
+# native size and renders pixel-perfect instead of resampled.
+#
+# Only the size ships here. Omarchy resolves the shell's family through the
+# fontconfig `monospace` alias that `omarchy font set` writes, and keeps that
+# system-wide on purpose, so no theme can pin a family. The README says which
+# font to set.
+base-size = 16
