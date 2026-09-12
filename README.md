@@ -122,12 +122,13 @@ The family cannot ship inside the theme. Omarchy resolves the shell's font
 through the fontconfig `monospace` alias `omarchy font set` writes and keeps
 that system-wide deliberately, so a theme can pin sizes but never a family.
 `shell.font.toml` ships the size — 16px, which is BigBlueTerm437's native 8x16
-cell, so it renders pixel-perfect rather than resampled.
+cell, so it renders pixel-perfect rather than interpolated. 32px is the other
+exact size if you want the same crispness larger.
 
 For everything to actually match, the size has to be set in pixels rather than
-points. A terminal usually asks for points: `size=11` in `foot.ini` is about
-14.7px, which will not line up with a 16px bar however carefully you pick the
-number. Ask for pixels instead:
+points. A terminal usually asks for points, and foot is DPI-aware, so `size=11`
+in `foot.ini` lands wherever your display's DPI puts it — about 16px at 104 DPI
+— and will not line up with a bar measured in pixels. Ask for pixels instead:
 
 ```ini
 font=BigBlueTerm437 Nerd Font Mono:pixelsize=16
@@ -141,6 +142,11 @@ gsettings set org.gnome.desktop.interface monospace-font-name "BigBlueTerm437 Ne
 
 Setting `font-name` as well puts button and dialog labels on the same font —
 consistent, though further than most people want to go.
+
+foot reads its configuration only at startup — it has no reload signal, and its
+`SIGUSR1`/`SIGUSR2` switch colour themes rather than reload — so a font change
+reaches a window only when that window is reopened. `omarchy restart terminal`
+covers alacritty, kitty and ghostty, not foot.
 
 ## Backgrounds
 
