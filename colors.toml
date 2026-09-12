@@ -4,15 +4,32 @@
 # different luminance. Things stay distinguishable the way they did on a real
 # P39 phosphor tube: by brightness, not by color.
 #
-# `red` is the BRIGHTEST green on purpose. Omarchy spends it on alerts — bar
+# The ladder is spaced in L* (perceptual lightness), not in hex. Below roughly
+# 3 L* apart two greens read as the same green, so the ten working rungs are
+# set 4.0–4.8 apart, and every ANSI slot clears 4.5:1 against black. `blue`
+# paints every directory `ls` prints and used to sit at 3.36:1; `muted` is
+# color8, the terminal's dim text and the lock placeholder, and sat at 3.85:1.
+#
+# `bright_X` is one half-step above `X`: on real hardware the bright bit was an
+# intensity bit, not a thirteenth color, so it reads as the same rung burning
+# harder rather than as a separate slot.
+#
+# `green` is `foreground`, which is correct rather than convenient — on a green
+# tube, ordinary text IS the green one. That pins it at L* 88.2 and leaves only
+# the top ~9 points for `red`, `bright_green`, `bright_red` and
+# `bright_foreground`, which are consequently spaced 1.7–2.6 and can be
+# confused with each other. They are all "loudest thing on screen" tokens in
+# contexts that do not overlap, so the collision costs nothing; spreading the
+# other eight rungs out of that pile-up is what matters.
+#
+# `red` stays the BRIGHTEST chromatic slot. Omarchy spends it on alerts — bar
 # `active`, polkit `text-error`, lock `border-error` — and on a monochrome tube
 # an alert reads as phosphor bloom, not as a different hue.
-
 mode = "dark"
 
 accent    = "#33FF33"
 selection = "#0D3B0D"
-muted     = "#1C7A1C"
+muted     = "#1B871B"  # L*  49.1   4.53:1  — color8, the dim rung
 
 background        = "#000000"
 dark_background   = "#000000"
@@ -29,19 +46,19 @@ bright_foreground = "#C8FFC8"
 hyprland_active_border   = "rgba(33ff33ff)"
 hyprland_inactive_border = "rgba(1a8f1a66)"
 
-# Luminance ladder, dimmest to brightest.
-brown   = "#146014"
-blue    = "#157015"
-magenta = "#1C8C1C"
-green   = "#33FF33"
-cyan    = "#5CFF5C"
-yellow  = "#7DFF7D"
-orange  = "#93FF93"
-red     = "#A8FFA8"
+# Luminance ladder, dimmest to brightest. L* and contrast-on-black in comments.
+brown   = "#146014"  # L*  40.9   2.71:1  — disabled/ignored, deliberately unreadable
+blue    = "#1E941E"  # L*  53.5   5.31:1
+magenta = "#23AD23"  # L*  62.0   7.07:1
+cyan    = "#28C828"  # L*  70.8   9.38:1
+yellow  = "#2DE22D"  # L*  79.1  12.03:1
+orange  = "#32F832"  # L*  86.0  14.61:1
+green   = "#33FF33"  # L*  88.2  15.49:1  — also `foreground`
+red     = "#B1FFB1"  # L*  93.5  17.81:1  — the alert bloom
 
-bright_blue    = "#33B833"
-bright_magenta = "#3FCC3F"
-bright_green   = "#66FF66"
-bright_cyan    = "#8FFF8F"
-bright_yellow  = "#B3FFB3"
-bright_red     = "#D6FFD6"
+bright_blue    = "#20A120"  # L*  57.9   6.18:1
+bright_magenta = "#25BA25"  # L*  66.2   8.13:1
+bright_cyan    = "#2BD52B"  # L*  75.0  10.66:1
+bright_yellow  = "#30F030"  # L*  83.5  13.63:1
+bright_green   = "#84FF84"  # L*  90.8  16.62:1
+bright_red     = "#E4FFE4"  # L*  97.5  19.72:1

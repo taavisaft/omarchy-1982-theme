@@ -31,6 +31,20 @@ did on a real P39 phosphor. `red` is the *brightest* green rather than the
 dimmest, because Omarchy spends it on alerts, and on a monochrome tube an alert
 reads as phosphor bloom.
 
+The rungs are spaced in L\* rather than by eye. Two greens less than about
+3 L\* apart read as the same green, so the ten working rungs sit 4.0–4.8
+apart and every ANSI slot clears 4.5:1 on black — `blue`, which is what `ls`
+paints every directory with, used to sit at 3.36:1. `bright_X` is half a step
+above `X`, because the bright bit on real hardware was an intensity bit rather
+than a thirteenth colour.
+
+The four slots above `green` — `red`, `bright_green`, `bright_red` and
+`bright_foreground` — are the exception, spaced 1.7–2.6 and so confusable with
+each other. `green` is `foreground`, which on a green tube is right rather than
+merely convenient, and that pins it near the top of the range. All four are
+"loudest thing on screen" tokens used in contexts that don't overlap, so the
+collision costs nothing.
+
 Foreground-to-background contrast is 15.5:1.
 
 ## Install

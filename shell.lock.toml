@@ -6,11 +6,11 @@
 background       = "#000000"
 background-alpha = 1.0
 text             = "#33FF33"
-placeholder      = "#1C7A1C"
-text-error       = "#A8FFA8"
+placeholder      = "#1B871B"
+text-error       = "#B1FFB1"
 border           = "hyprland.active-border"
 border-active    = "hyprland.active-border"
-border-error     = "#A8FFA8"
+border-error     = "#B1FFB1"
 border-alpha     = 1.0
 selection        = "#33FF33"
 selection-alpha  = 0.45
