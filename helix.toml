@@ -2,39 +2,43 @@
 #
 # The desktop is MDA green. Code is not: IBM shipped the Color Graphics
 # Adapter the same year, and its 16-color palette is what a 1982 machine
-# showed when it had colors to show. Syntax mappings below are Omarchy's
-# stock helix.toml.tpl; only [palette] differs.
+# showed when it had colors to show.
+#
+# [palette] is CGA. The syntax mappings start from Omarchy's stock
+# helix.toml.tpl but follow extras/neovim/colors/cga1982.lua wherever the two
+# disagreed, so Helix, Neovim and Zed put the same hue on the same role.
 
 # Syntax
 "keyword" = "color5"
 "keyword.control" = { fg = "color5", modifiers = ["italic"] }
-"function" = "color4"
-"function.builtin" = "color4"
-"function.macro" = "color5"
+"function" = "color6"
+"function.builtin" = "color6"
+"function.macro" = "brown"
+"keyword.directive" = "brown"
 "type" = "color3"
-"type.builtin" = "color5"
-"type.enum.variant" = "color6"
-"constructor" = "color4"
-"constant" = "color3"
-"constant.builtin" = "color3"
-"constant.numeric" = "color3"
-"constant.character" = "color6"
+"type.builtin" = "color3"
+"type.enum.variant" = "color3"
+"constructor" = "color3"
+"constant" = "color1"
+"constant.builtin" = "color1"
+"constant.numeric" = "color1"
+"constant.character" = "color2"
 "constant.character.escape" = "color5"
 "string" = "color2"
 "string.regexp" = "color5"
-"string.special" = "color4"
+"string.special" = "color6"
 "comment" = { fg = "color8", modifiers = ["italic"] }
 "variable" = "foreground"
-"variable.parameter" = { fg = "color5", modifiers = ["italic"] }
+"variable.parameter" = { fg = "foreground", modifiers = ["italic"] }
 "variable.builtin" = "color1"
-"variable.other.member" = "color4"
-"label" = "color4"
-"punctuation" = "color8"
-"punctuation.special" = "color6"
-"operator" = "color6"
-"tag" = "color4"
+"variable.other.member" = "foreground"
+"label" = "color6"
+"punctuation" = "foreground"
+"punctuation.special" = "color5"
+"operator" = "foreground"
+"tag" = "color5"
 "namespace" = { fg = "color3", modifiers = ["italic"] }
-"special" = "color5"
+"special" = "color6"
 "attribute" = "color3"
 
 # Markup
@@ -59,13 +63,13 @@
 # Diff
 "diff.plus" = "color2"
 "diff.minus" = "color1"
-"diff.delta" = "color4"
+"diff.delta" = "color3"
 
 # Leave the editor background transparent so the terminal background shows through
 "ui.background" = { }
 
 "ui.linenr" = { fg = "color8" }
-"ui.linenr.selected" = { fg = "foreground" }
+"ui.linenr.selected" = { fg = "color3", modifiers = ["bold"] }
 
 # Statusline uses an inverted band (background-color text on foreground-color
 # background) to guarantee contrast across both light and dark Omarchy themes.
@@ -112,19 +116,21 @@
 
 "diagnostic.error" = { underline = { color = "color1", style = "curl" } }
 "diagnostic.warning" = { underline = { color = "color3", style = "curl" } }
-"diagnostic.info" = { underline = { color = "color4", style = "curl" } }
-"diagnostic.hint" = { underline = { color = "color6", style = "curl" } }
+"diagnostic.info" = { underline = { color = "color6", style = "curl" } }
+"diagnostic.hint" = { underline = { color = "color4", style = "curl" } }
 "diagnostic.unnecessary" = { modifiers = ["dim"] }
 "diagnostic.deprecated" = { modifiers = ["crossed_out"] }
 
 error = "color1"
 warning = "color3"
-info = "color4"
-hint = "color6"
+info = "color6"
+hint = "color4"
 
 [palette]
 background = "#000000"
-foreground = "#AAAAAA"
+# Neutral buffer text: the one role outside the CGA 16, matching
+# cga1982.lua and Zed. CGA light grey read as white on a green machine.
+foreground = "#8FE88F"
 lighter_background = "#0A0A0A"
 cursor = "#FFFFFF"
 selection_background = "#0000AA"
@@ -138,3 +144,4 @@ color5 = "#FF55FF"
 color6 = "#55FFFF"
 color7 = "#AAAAAA"
 color8 = "#555555"
+brown = "#AA5500"

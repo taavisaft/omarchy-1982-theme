@@ -42,6 +42,7 @@ omarchy theme install https://github.com/taavisaft/omarchy-1982-theme.git
 ### Editors
 
 Helix needs nothing — `helix.toml` ships with the theme and is applied for you.
+It carries the same CGA role map as the two below.
 
 Neovim needs one manual step, and it cannot be automated from inside a theme:
 Omarchy drops every `.lua` and `vscode.json` from a theme installed out of a git
@@ -65,8 +66,8 @@ cp extras/zed/settings.json ~/.config/zed/settings.json   # merge, if you have y
 
 Zed is split the same way the desktop is: the chrome — tabs, panels, status
 bar, borders, icons — is MDA green, while everything inside a buffer is CGA and
-uses the same role-to-color mapping as the Neovim colorscheme, so the two
-editors read alike.
+uses the same role-to-color mapping as the Neovim colorscheme and the shipped
+`helix.toml`, so all three editors read alike.
 
 Zed's built-in terminal is a terminal rather than a code buffer, so it is MDA
 green too, carrying the exact ANSI palette Omarchy generates into the theme's
