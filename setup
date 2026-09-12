@@ -1,0 +1,233 @@
+#!/usr/bin/env bash
+#
+# 1982 setup -- everything the theme itself cannot ship.
+#
+# Omarchy stages only the files a repo-installed theme is allowed to
+# contribute: no .lua, no font family, and nothing at all for apps it does not
+# template. This script does the rest of the install in one pass.
+#
+#   ~/.config/omarchy/themes/1982/setup        (installed theme)
+#   ./setup                                    (a clone)
+#
+# Safe to re-run: every step checks the current state first and says what it
+# did. Files it edits in place are backed up next to themselves once per run.
+
+set -euo pipefail
+
+THEME_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+FONT="Terminess Nerd Font Mono"
+FONT_PX=16
+STAMP=$(date +%Y%m%d-%H%M%S)
+
+bold=$'\e[1m'; dim=$'\e[2m'; reset=$'\e[0m'
+step() { printf '\n%s==>%s %s\n' "$bold" "$reset" "$1"; }
+did()  { printf '    %s\n' "$1"; }
+skip() { printf '    %s%s%s\n' "$dim" "$1" "$reset"; }
+warn() { printf '    !   %s\n' "$1" >&2; }
+
+# One backup per file per run, so re-running does not bury the original.
+backup() {
+  local f=$1 b="$1.bak.$STAMP-pre-1982"
+  [[ -f $f && ! -f $b ]] && cp -- "$f" "$b" && did "backed up ${f/#$HOME/\~} -> ${b##*/}"
+  return 0
+}
+
+# Set key=value inside an ini section, adding the section or the key if either
+# is missing. Used for foot.ini and mc's ini, which are both flat ini files
+# whose keys appear once.
+ini_set() {
+  local file=$1 section=$2 key=$3 value=$4
+  if [[ ! -f $file ]]; then
+    mkdir -p -- "$(dirname -- "$file")"
+    printf '[%s]\n%s=%s\n' "$section" "$key" "$value" >"$file"
+    did "created ${file/#$HOME/\~} with $key=$value"
+  elif grep -qxF "$key=$value" -- "$file"; then
+    skip "$key is already $value in ${file/#$HOME/\~}"
+  elif grep -qE "^$key=" -- "$file"; then
+    backup "$file"
+    sed -i -E "0,/^$key=/{s|^$key=.*|$key=$value|}" -- "$file"
+    did "set $key=$value in ${file/#$HOME/\~}"
+  elif grep -qxF "[$section]" -- "$file"; then
+    backup "$file"
+    sed -i "/^\[$section\]/a $key=$value" -- "$file"
+    did "added $key=$value to [$section] in ${file/#$HOME/\~}"
+  else
+    backup "$file"
+    printf '\n[%s]\n%s=%s\n' "$section" "$key" "$value" >>"$file"
+    did "added [$section] $key=$value to ${file/#$HOME/\~}"
+  fi
+}
+
+# Copy only when the destination is missing or stale, so a re-run is quiet.
+install_file() {
+  local src=$1 dest=$2
+  if [[ -f $dest ]] && cmp -s -- "$src" "$dest"; then
+    skip "${dest/#$HOME/\~} is current"
+  else
+    [[ -f $dest ]] && backup "$dest"
+    install -Dm644 -- "$src" "$dest"
+    did "installed ${dest/#$HOME/\~}"
+  fi
+}
+
+# --- the theme itself ---------------------------------------------------------
+
+step "Theme"
+if ! command -v omarchy >/dev/null; then
+  warn "omarchy not on PATH -- this script is for an Omarchy system."
+  exit 1
+fi
+current_theme=$(omarchy theme current 2>/dev/null || true)
+if [[ $current_theme == "1982" ]]; then
+  did "1982 is the current theme"
+else
+  warn "current theme is '${current_theme:-unknown}', not 1982."
+  warn "run: omarchy theme set 1982"
+fi
+
+# --- font ---------------------------------------------------------------------
+#
+# The family cannot ship in the theme: Omarchy resolves the shell's font
+# through a system-wide fontconfig alias, so a theme can pin the size but never
+# the face. Terminess is Terminus patched with Nerd Font glyphs -- an unpatched
+# retro face turns every one of the bar's icons into a tofu box.
+
+step "Font"
+if pacman -Qq ttf-terminus-nerd >/dev/null 2>&1; then
+  skip "ttf-terminus-nerd is installed"
+else
+  did "installing ttf-terminus-nerd"
+  sudo pacman -S --needed ttf-terminus-nerd
+fi
+
+if [[ $(omarchy font current 2>/dev/null || true) == "$FONT" ]]; then
+  skip "monospace is already $FONT"
+else
+  omarchy font set "$FONT" >/dev/null
+  did "set monospace to $FONT"
+fi
+
+# foot is DPI-aware, so a size in points lands wherever the display's DPI puts
+# it and will not line up with a bar measured in pixels. Ask for pixels.
+# Omarchy ships a foot.ini; if it has gone missing, seed it with the include
+# that pulls in the theme's colours before setting the size.
+foot_ini="$HOME/.config/foot/foot.ini"
+if [[ ! -f $foot_ini ]]; then
+  mkdir -p -- "$(dirname -- "$foot_ini")"
+  printf '[main]\ninclude=~/.local/state/omarchy/current/theme/foot.ini\n' >"$foot_ini"
+  did "created ~/.config/foot/foot.ini"
+fi
+ini_set "$foot_ini" main font "$FONT:pixelsize=$FONT_PX"
+
+# GTK apps take the font from neither the theme nor `omarchy font set`.
+if command -v gsettings >/dev/null; then
+  gtk_key=org.gnome.desktop.interface
+  if [[ $(gsettings get $gtk_key monospace-font-name) == "'$FONT ${FONT_PX}px'" ]]; then
+    skip "GTK monospace font is already $FONT ${FONT_PX}px"
+  else
+    gsettings set $gtk_key monospace-font-name "$FONT ${FONT_PX}px"
+    did "set GTK monospace font to $FONT ${FONT_PX}px"
+  fi
+else
+  skip "gsettings not found, leaving GTK apps alone"
+fi
+
+# --- editors ------------------------------------------------------------------
+
+step "Neovim"
+# Omarchy drops every .lua from a repo-installed theme, so the CGA colorscheme
+# cannot ride along inside the theme and has to be copied into the nvim config.
+install_file "$THEME_DIR/extras/neovim/colors/cga1982.lua" \
+  "$HOME/.config/nvim/colors/cga1982.lua"
+install_file "$THEME_DIR/extras/neovim/lua/plugins/1982.lua" \
+  "$HOME/.config/nvim/lua/plugins/1982.lua"
+
+step "Helix"
+skip "nothing to do -- helix.toml ships with the theme"
+
+step "Zed"
+# Zed has no Omarchy template, and the theme's settings.json is a whole file
+# rather than a fragment, so an existing config is never overwritten.
+zed_settings="$HOME/.config/zed/settings.json"
+if [[ ! -f $zed_settings ]]; then
+  install -Dm644 -- "$THEME_DIR/extras/zed/settings.json" "$zed_settings"
+  did "installed ~/.config/zed/settings.json"
+elif cmp -s -- "$THEME_DIR/extras/zed/settings.json" "$zed_settings"; then
+  skip "~/.config/zed/settings.json is current"
+else
+  install -Dm644 -- "$THEME_DIR/extras/zed/settings.json" "$zed_settings.1982"
+  did "wrote ~/.config/zed/settings.json.1982"
+  warn "you already have Zed settings -- merge the theme_overrides block from"
+  warn "settings.json.1982 into settings.json by hand."
+fi
+
+step "Midnight Commander"
+# mc is not themed by Omarchy at all, so the skin is installed and selected by
+# hand. Note that mcedit's syntax highlighting stays monochrome: mc maps syntax
+# onto the terminal's ANSI palette, which this theme paints green.
+install_file "$THEME_DIR/mc/1982.ini" "$HOME/.local/share/mc/skins/1982.ini"
+ini_set "$HOME/.config/mc/ini" Midnight-Commander skin 1982
+
+# --- window look --------------------------------------------------------------
+#
+# Gaps, rounding, the CRT glow and window opacity are not a theme's business,
+# and Hyprland is configured in Lua, which a repo-installed theme cannot ship.
+
+step "Window look"
+looknfeel="$HOME/.config/hypr/looknfeel.lua"
+if [[ ! -f $looknfeel ]]; then
+  warn "${looknfeel/#$HOME/\~} not found, skipping the Hyprland look."
+elif grep -q "1982:looknfeel" -- "$looknfeel"; then
+  skip "already configured (remove the 1982:looknfeel block to redo it)"
+elif grep -q "default-opacity" -- "$looknfeel"; then
+  skip "an opacity rule is already set by hand, leaving looknfeel.lua alone"
+else
+  backup "$looknfeel"
+  cat >>"$looknfeel" <<'LUA'
+
+-- 1982:looknfeel -- the CRT look, which cannot ship inside the theme because
+-- Omarchy drops a repo-installed theme's Lua.
+hl.config({
+  general = { border_size = 2, gaps_in = 4, gaps_out = 10 },
+  decoration = {
+    -- A tube was blown glass, not a rectangle: the picture met the bezel on a
+    -- curve. Slight, so a window still reads as a character cell.
+    rounding = 6,
+    rounding_power = 3,
+    -- Phosphor glow. A CRT bled light into the glass around whatever it drew,
+    -- so the focused window carries a green halo and the rest a fainter one.
+    shadow = {
+      enabled = true,
+      range = 18,
+      render_power = 3,
+      color = "rgba(33ff3338)",
+      color_inactive = "rgba(1a8f1a14)",
+    },
+  },
+})
+
+-- Every window sits back off full brightness -- the phosphor reads better held
+-- down than run flat out. Omarchy applies opacity as a window rule rather than
+-- through decoration:active_opacity, so the rule is what has to be overridden.
+-- Against a near-black wallpaper opacity reads as dimming rather than
+-- see-through, which is why the step is a large one: Omarchy's own 0.96 is
+-- invisible.
+o.window({ tag = "default-opacity" }, { opacity = "0.60 0.60" })
+LUA
+  did "appended the 1982 block to ~/.config/hypr/looknfeel.lua"
+  if hyprctl reload >/dev/null 2>&1; then
+    errors=$(hyprctl configerrors 2>/dev/null || true)
+    if [[ -n $errors ]]; then
+      warn "hyprctl reports config errors:"
+      printf '%s\n' "$errors" >&2
+    else
+      did "reloaded Hyprland"
+    fi
+  fi
+fi
+
+# --- done ---------------------------------------------------------------------
+
+printf '\n%sDone.%s ' "$bold" "$reset"
+echo "foot reads its config only at startup and has no reload signal, so"
+echo "reopen your terminal windows for the font to take."
