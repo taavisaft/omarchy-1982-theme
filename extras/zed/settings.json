@@ -177,7 +177,6 @@
         "link_uri": { "color": "#30F030" },
         // L* 88.2 -- body text, the green the tube is named for
         "variable": { "color": "#33FF33" },
-        "property": { "color": "#33FF33" },
         "field": { "color": "#33FF33" },
         "embedded": { "color": "#33FF33" },
         "primary": { "color": "#33FF33" },
@@ -185,6 +184,10 @@
         // L* 93.5 -- the loudest rung: keywords, and the tags that frame a document
         "keyword": { "color": "#B1FFB1" },
         "tag": { "color": "#B1FFB1" },
+        // A declaration's key, a rung above its value: in CSS the property
+        // name, elsewhere an object key or a struct field. Zed's syntax map is
+        // not per-language, so this is also `foo.bar` member access in JS.
+        "property": { "color": "#B1FFB1" },
         "punctuation.special": { "color": "#B1FFB1" },
         "string.escape": { "color": "#B1FFB1" },
         "string.regex": { "color": "#B1FFB1" },
