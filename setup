@@ -200,7 +200,7 @@ hl.config({
       enabled = true,
       range = 18,
       render_power = 3,
-      color = "rgba(33ff3338)",
+      color = "rgba(33ff3328)",
       color_inactive = "rgba(1a8f1a14)",
     },
   },
@@ -212,7 +212,7 @@ hl.config({
 -- Against a near-black wallpaper opacity reads as dimming rather than
 -- see-through, which is why the step is a large one: Omarchy's own 0.96 is
 -- invisible.
-o.window({ tag = "default-opacity" }, { opacity = "0.60 0.60" })
+o.window({ tag = "default-opacity" }, { opacity = "0.70 0.60" })
 LUA
   did "appended the 1982 block to ~/.config/hypr/looknfeel.lua"
   if hyprctl reload >/dev/null 2>&1; then
