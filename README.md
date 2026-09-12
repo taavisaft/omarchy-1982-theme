@@ -109,21 +109,29 @@ mcedit stays monochrome. Neovim is where the CGA exception lives.
 
 ### Font
 
-The theme is drawn for **BigBlueTerm437 Nerd Font Mono** — IBM's code page 437
-ROM font, the one the 5151 actually displayed, patched with Nerd Font glyphs so
-the bar's icons survive.
+The theme is drawn for **Terminess Nerd Font Mono** — Terminus, the DOS-console
+face, patched with Nerd Font glyphs so the bar's icons survive. A plain retro
+font will not do: Omarchy resolves the bar's icons through the same `monospace`
+alias, so an unpatched family turns every one of them into a tofu box.
 
 ```bash
-sudo pacman -S ttf-bigblueterminal-nerd
-omarchy font set "BigBlueTerm437 Nerd Font Mono"
+sudo pacman -S ttf-terminus-nerd
+omarchy font set "Terminess Nerd Font Mono"
 ```
+
+If you want something heavier and closer to the ROM, `ttf-bigblueterminal-nerd`
+gives you **BigBlueTerm437 Nerd Font Mono**, IBM's code page 437 font. It is
+drawn on an 8x16 cell with 2px stems, so it reads considerably bolder than
+Terminess's 1px strokes at the same size. Note that it is the CGA/VGA face
+rather than the MDA one the 5151 itself carried — for that, PxPlus IBM MDA from
+the Ultimate Oldschool PC Font Pack is the real 9x14 article, thinner again,
+though it ships no Nerd glyphs and so suits the terminal rather than the bar.
 
 The family cannot ship inside the theme. Omarchy resolves the shell's font
 through the fontconfig `monospace` alias `omarchy font set` writes and keeps
 that system-wide deliberately, so a theme can pin sizes but never a family.
-`shell.font.toml` ships the size — 16px, which is BigBlueTerm437's native 8x16
-cell, so it renders pixel-perfect rather than interpolated. 32px is the other
-exact size if you want the same crispness larger.
+`shell.font.toml` ships the size — 16px, which is Terminess's native 8x16 cell,
+so it renders pixel-perfect rather than interpolated.
 
 For everything to actually match, the size has to be set in pixels rather than
 points. A terminal usually asks for points, and foot is DPI-aware, so `size=11`
@@ -131,13 +139,13 @@ in `foot.ini` lands wherever your display's DPI puts it — about 16px at 104 DP
 — and will not line up with a bar measured in pixels. Ask for pixels instead:
 
 ```ini
-font=BigBlueTerm437 Nerd Font Mono:pixelsize=16
+font=Terminess Nerd Font Mono:pixelsize=16
 ```
 
 GTK applications take neither from the theme nor from `omarchy font set`:
 
 ```bash
-gsettings set org.gnome.desktop.interface monospace-font-name "BigBlueTerm437 Nerd Font Mono 16px"
+gsettings set org.gnome.desktop.interface monospace-font-name "Terminess Nerd Font Mono 16px"
 ```
 
 Setting `font-name` as well puts button and dialog labels on the same font —

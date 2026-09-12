@@ -11,14 +11,14 @@
     "dock": "left"
   },
   // One font, one size, everywhere -- matches foot, the Omarchy bar and GTK.
-  // BigBlueTerm437 is the IBM PC code-page-437 ROM font; its cell is 8x16, so
-  // 16px renders it pixel-perfect rather than interpolated.
-  "ui_font_family": "BigBlueTerm437 Nerd Font Mono",
+  // Terminess is Terminus patched with Nerd Font glyphs; its 16px bitmap is an
+  // 8x16 cell, so 16px renders it pixel-perfect rather than interpolated.
+  "ui_font_family": "Terminess Nerd Font Mono",
   "ui_font_size": 16,
-  "buffer_font_family": "BigBlueTerm437 Nerd Font Mono",
+  "buffer_font_family": "Terminess Nerd Font Mono",
   "buffer_font_size": 16,
   "terminal": {
-    "font_family": "BigBlueTerm437 Nerd Font Mono",
+    "font_family": "Terminess Nerd Font Mono",
     "font_size": 16
   },
   "theme": {
