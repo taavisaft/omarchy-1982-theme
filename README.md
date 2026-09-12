@@ -99,12 +99,13 @@ hl.config({
   },
 })
 
--- Unfocused windows sit back, so the focused one is the only fully lit tile.
--- Omarchy applies opacity as a window rule, not through
--- decoration:inactive_opacity, so the rule is what has to be overridden.
--- Against a near-black wallpaper opacity reads as dimming rather than
--- see-through, which is why the step is a large one: 0.96 is invisible.
-o.window({ tag = "default-opacity" }, { opacity = "0.985 0.60" })
+-- Every window sits back off full brightness, focused or not -- the phosphor
+-- reads better held down than run flat out. Focus is carried by the border and
+-- the glow instead. Omarchy applies opacity as a window rule, not through
+-- decoration:active_opacity, so the rule is what has to be overridden. Against
+-- a near-black wallpaper opacity reads as dimming rather than see-through,
+-- which is why the step is a large one: Omarchy's own 0.96 is invisible.
+o.window({ tag = "default-opacity" }, { opacity = "0.60 0.60" })
 ```
 
 ## License
