@@ -21,7 +21,8 @@ A 1982 machine had an answer for that, so this theme uses it.
 | Terminal, TUI apps | MDA | green on black |
 | Editor chrome (tabs, panels, gutter) | MDA | green on black |
 | Editor's built-in terminal | MDA | green on black |
-| Editor buffer — the code itself | CGA | 16 colors, light-green body text |
+| Neovim / Helix buffer — the code itself | CGA | 16 colors, light-green body text |
+| Zed buffer | MDA | green on black, roles spaced on the L\* ladder |
 
 ## Palette
 
@@ -78,10 +79,16 @@ way to run the theme if you want the machine to be monochrome all the way down.
 cp extras/zed/settings.json ~/.config/zed/settings.json   # merge, if you have your own
 ```
 
-Zed is split the same way the desktop is: the chrome — tabs, panels, status
-bar, borders, icons — is MDA green, while everything inside a buffer is CGA and
-uses the same role-to-color mapping as the Neovim colorscheme and the shipped
-`helix.toml`, so all three editors read alike.
+Zed is the exception to the exception: it is MDA all the way down. The chrome —
+tabs, panels, status bar, borders, icons — is green, and so is the buffer, where
+syntax roles sit on the same L\* ladder as everything else and are told apart by
+brightness rather than hue. Neovim and Helix keep the CGA map, so if you want a
+coloured buffer, use one of those.
+
+Zed has no Omarchy template — `default/themed/` ships one for Helix, Neovim and
+VS Code but not for Zed — so this is a manual copy no matter what, and it works
+by overriding One Dark through `theme_overrides` rather than by registering a
+theme of its own.
 
 Zed's built-in terminal is a terminal rather than a code buffer, so it is MDA
 green too, carrying the exact ANSI palette Omarchy generates into the theme's
